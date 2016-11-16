@@ -7,6 +7,7 @@ public class EnemyController : Figure {
 	public float maxVelocity;
 
 	public Vector3 spawnPosition;
+	public SpriteRenderer indicator;
 	public Transform strikeRadius;
 	public Transform firingPoint;
 	public Transform awareRadius;

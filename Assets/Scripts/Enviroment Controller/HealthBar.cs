@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour {
 
 	public Figure owner;
+	public Image icon;
 	private Slider thisHealthBar;
 	private float minVisibleHealth = -3f;
 
@@ -42,5 +43,12 @@ public class HealthBar : MonoBehaviour {
 		Image[] images = GetComponentsInChildren<Image>();
 		foreach (var img in images)
 			img.enabled = toggle;
+		//Set color of healthbar icon (if owner is enemy)
+		if (toggle)
+			if (owner.tag == "Enemy")
+			{
+				Color colorToChange = owner.GetComponent<EnemyController>().indicator.color;
+				icon.color = colorToChange;
+			}
 	}
 }

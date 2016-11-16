@@ -19,6 +19,8 @@ public abstract class Figure : MonoBehaviour {
 	{
 		enabled = false;
 		GetComponent<Renderer>().enabled = false;
+		foreach (var renderers in GetComponentsInChildren<Renderer>())
+			renderers.enabled = false;
 		ToggleColliders(false);
 		GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 		GetComponent<Rigidbody2D>().gravityScale = 0f;
@@ -31,6 +33,8 @@ public abstract class Figure : MonoBehaviour {
 		GetComponent<Animator>().SetBool("isDead", false);
 		transform.position = respawnPosition;
 		GetComponent<Renderer>().enabled = true;
+		foreach (var renderers in GetComponentsInChildren<Renderer>())
+			renderers.enabled = true;
 		GetComponent<Rigidbody2D>().gravityScale = gravity;
 		ToggleColliders(true);
 		if (respawnParticle != null)
