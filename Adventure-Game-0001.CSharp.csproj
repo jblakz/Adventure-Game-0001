@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Inputs\ThrowButton.cs" />
     <Compile Include="Assets\Scripts\Inputs\VirtualJoystick.cs" />
     <Compile Include="Assets\Scripts\Player Behaviour\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Player Behaviour\PlayerSight.cs" />
     <Compile Include="Assets\Scripts\Scene Controllers\MainMenuController.cs" />
     <Compile Include="Assets\Scripts\Scene Controllers\OptionMenuController.cs" />
   </ItemGroup>
