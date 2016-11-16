@@ -20,7 +20,7 @@ public class PlayerSight : MonoBehaviour {
 			if (target.enabled)
 				target.GetComponent<EnemyController>().withinSight = true;
 	}
-	void OnTriggerExit2D(Collider target)
+	void OnTriggerExit2D(Collider2D target)
 	{
 		if (target.tag == "Enemy")
 			target.GetComponent<EnemyController>().withinSight = false;
