@@ -10,18 +10,19 @@ public class PlayerSight : MonoBehaviour {
 		allEnemies = FindObjectsOfType<EnemyController>();
 		foreach (var enemy in allEnemies)
 		{
-			enemy.Die();
-			foreach (var collider in enemy.GetComponents<Collider2D>())
-				collider.enabled = true;
+			enemy.withinSight = false;
 		}
 	}
 	
 	void OnTriggerEnter2D(Collider2D target)
 	{
 		if (target.tag == "Enemy")
-		{
-			if (!target.enabled)
-				target.GetComponent<EnemyController>().Respawn(LevelController.gravity, target.GetComponent<EnemyController>().spawnPosition, null);
-		}
+			if (target.enabled)
+				target.GetComponent<EnemyController>().withinSight = true;
+	}
+	void OnTriggerExit2D(Collider target)
+	{
+		if (target.tag == "Enemy")
+			target.GetComponent<EnemyController>().withinSight = false;
 	}
 }

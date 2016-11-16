@@ -5,8 +5,8 @@ public class EnemyController : Figure {
 	public float speed;
 	public float jumpForce;
 	public float maxVelocity;
+	public bool withinSight;
 
-	public Vector3 spawnPosition;
 	public SpriteRenderer indicator;
 	public Transform strikeRadius;
 	public Transform firingPoint;
@@ -19,6 +19,7 @@ public class EnemyController : Figure {
 	public GameObject damageEffect;
 
 	//[SerializeField]
+	public Vector3 spawnPosition;
 	private Rigidbody2D body;
 	private Animator anim;
 	private PlayerController player;
