@@ -7,6 +7,7 @@ public class PlayerController : Figure
 	public float speed;
 	public float jumpForce;
 	public float maxVelocity;
+	public float forceS;
 
 	public Transform firingPoint;
 	public Transform groundCheck;
@@ -153,6 +154,13 @@ public class PlayerController : Figure
 		if (body.IsTouching(levelController.currentCheckpoint.GetComponent<Collider2D>()))
 			isDead = false;
 		anim.SetBool("isDead", isDead);
+	}
+	public void OnTriggerEnter2D(Collider2D target)
+	{
+		if(target.name=="Spring")
+		{
+			body.velocity = new Vector2(body.velocity.x, forceS);
+		}
 	}
 
 	//Coroutine
