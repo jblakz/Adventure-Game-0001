@@ -17,10 +17,8 @@ public class EnemyHBsFrame : MonoBehaviour
 		healthBar2 = GameObject.Find("Enemies Info/Enemy Health Bar 2").GetComponent<HealthBar>();
 		healthBar3 = GameObject.Find("Enemies Info/Enemy Health Bar 3").GetComponent<HealthBar>();
 		allEnemies = FindObjectsOfType<EnemyController>();
-		ConfigureOwner(healthBar1);
-		ConfigureOwner(healthBar2);
-		ConfigureOwner(healthBar3);
-	}
+		ConfigureAllHealthBars();
+    }
 
 	// Update is called once per frame
 	void Update()
@@ -52,7 +50,7 @@ public class EnemyHBsFrame : MonoBehaviour
 				{
 					enemy.healthDisplayed = false;
 				}
-				ConfigureOwner(healthBar);
+				ConfigureAllHealthBars();
 			}
 		}
 	}
@@ -63,5 +61,11 @@ public class EnemyHBsFrame : MonoBehaviour
 		if (healthBar1.owner == healthBar3.owner
 			||healthBar2.owner == healthBar3.owner)
 			healthBar3.owner = null;
+	}
+	public void ConfigureAllHealthBars()
+	{
+		ConfigureOwner(healthBar1);
+		ConfigureOwner(healthBar2);
+		ConfigureOwner(healthBar3);
 	}
 }
