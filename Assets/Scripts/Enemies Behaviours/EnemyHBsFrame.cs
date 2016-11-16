@@ -47,10 +47,12 @@ public class EnemyHBsFrame : MonoBehaviour
 			if (!healthBar.owner.enabled)
 			{
 				foreach (var enemy in allEnemies)
-				{
 					enemy.healthDisplayed = false;
-				}
 				ConfigureAllHealthBars();
+			}
+			if (!healthBar.owner.GetComponent<EnemyController>().withinSight)
+			{
+				//Code here
 			}
 		}
 	}

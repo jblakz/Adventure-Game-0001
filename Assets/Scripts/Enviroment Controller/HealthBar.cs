@@ -40,15 +40,21 @@ public class HealthBar : MonoBehaviour {
 	}
 	public void ToggleOn(bool toggle)
 	{
+		if (toggle)
+			if (owner.tag == "Enemy")
+				toggle = IsProperEnemyHB();
 		Image[] images = GetComponentsInChildren<Image>();
 		foreach (var img in images)
 			img.enabled = toggle;
-		//Set color of healthbar icon (if owner is enemy)
-		if (toggle)
-			if (owner.tag == "Enemy")
-			{
-				Color colorToChange = owner.GetComponent<EnemyController>().indicator.color;
-				icon.color = colorToChange;
-			}
+	}
+	bool IsProperEnemyHB()
+	{
+		if (owner.GetComponent<EnemyController>().withinSight)
+		{
+			Color colorToChange = owner.GetComponent<EnemyController>().indicator.color;
+			icon.color = colorToChange;
+			return true;
+		}
+		else return false;
 	}
 }
