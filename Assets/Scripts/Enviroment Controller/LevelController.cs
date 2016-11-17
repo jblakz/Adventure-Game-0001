@@ -14,7 +14,6 @@ public class LevelController : MonoBehaviour
 	private PlayerController player;
 	
 	private EnemyController[] allEnemies;
-	private EnemyHBsFrame enemyHBsFrame;
 	private HealthBar[] allHealthBar;
 
 	// Use this for initialization
@@ -23,7 +22,6 @@ public class LevelController : MonoBehaviour
 		player = FindObjectOfType<PlayerController>();
 		player.GetComponent<Rigidbody2D>().gravityScale = gravity;
 		allEnemies = FindObjectsOfType<EnemyController>();
-		enemyHBsFrame = FindObjectOfType<EnemyHBsFrame>();
 		allHealthBar = FindObjectsOfType<HealthBar>();
 	}
 
@@ -50,7 +48,6 @@ public class LevelController : MonoBehaviour
 			enemy.Respawn(gravity, enemy.spawnPosition, null);
 		foreach (var hb in allHealthBar)
 			hb.Refresh();
-		enemyHBsFrame.ConfigureAllHealthBars();
 	}
 	public IEnumerator PlayerDieCo()
 	{

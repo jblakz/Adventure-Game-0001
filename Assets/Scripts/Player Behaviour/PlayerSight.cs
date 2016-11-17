@@ -2,15 +2,16 @@
 using System.Collections;
 
 public class PlayerSight : MonoBehaviour {
-
+	
 	EnemyController[] allEnemies;
+	private int hbCounter = 0;
 
 	// Use this for initialization
 	void Start () {
 		allEnemies = FindObjectsOfType<EnemyController>();
 		foreach (var enemy in allEnemies)
 		{
-			enemy.withinSight = false;
+			enemy.GetComponentInChildren<HealthBar>().ToggleOn(false);
 		}
 	}
 	
@@ -18,11 +19,15 @@ public class PlayerSight : MonoBehaviour {
 	{
 		if (target.tag == "Enemy")
 			if (target.enabled)
-				target.GetComponent<EnemyController>().withinSight = true;
+			{
+				
+            }
 	}
 	void OnTriggerExit2D(Collider2D target)
 	{
 		if (target.tag == "Enemy")
-			target.GetComponent<EnemyController>().withinSight = false;
+		{
+			
+		}
 	}
 }

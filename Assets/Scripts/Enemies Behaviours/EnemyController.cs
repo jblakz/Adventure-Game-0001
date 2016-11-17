@@ -5,7 +5,6 @@ public class EnemyController : Figure {
 	public float speed;
 	public float jumpForce;
 	public float maxVelocity;
-	public bool withinSight;
 
 	public SpriteRenderer indicator;
 	public Transform strikeRadius;
@@ -22,6 +21,7 @@ public class EnemyController : Figure {
 	public Vector3 spawnPosition;
 	private Rigidbody2D body;
 	private Animator anim;
+	private Canvas healthCanvas;
 	private PlayerController player;
 	private bool canAttack;
 
@@ -30,6 +30,7 @@ public class EnemyController : Figure {
 	{
 		body = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
+		healthCanvas = GetComponentInChildren<Canvas>();
 		player = FindObjectOfType<PlayerController>();
 		health = maxHealth;
 		spawnPosition = body.position;
@@ -52,7 +53,8 @@ public class EnemyController : Figure {
 		MovementCheck();
 		AttackCheck();
 		DeathCheck();
-	}
+		FixHealthCanvas();
+    }
 
 	void MovementCheck()
 	{
@@ -159,6 +161,19 @@ public class EnemyController : Figure {
 			Instantiate(damageEffect,body.transform.position,body.transform.rotation);
 			anim.SetBool("isDead", true);
 			Die();
+		}
+	}
+	private void FixHealthCanvas()
+	{
+		if (healthCanvas != null)
+		{
+			Vector3 tempVector = healthCanvas.transform.localScale;
+			if ((transform.localScale.x < 0f && tempVector.x > 0)
+				|| (transform.localScale.x > 0f && tempVector.x < 0))
+            {
+				tempVector.x = -tempVector.x;
+				healthCanvas.transform.localScale = tempVector;
+			}
 		}
 	}
 }
