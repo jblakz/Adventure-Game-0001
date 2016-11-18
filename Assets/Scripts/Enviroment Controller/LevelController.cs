@@ -46,8 +46,6 @@ public class LevelController : MonoBehaviour
 		KunaiManager.Reset();
 		foreach (var enemy in allEnemies)
 			enemy.Respawn(gravity, enemy.spawnPosition, null);
-		foreach (var hb in allHealthBar)
-			hb.Refresh();
 	}
 	public IEnumerator PlayerDieCo()
 	{

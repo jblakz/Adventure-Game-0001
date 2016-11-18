@@ -79,10 +79,7 @@ public class EnemyController : Figure {
 						forceX = speed * 1.2f;
 				}
 				anim.SetBool("isRunning", true);
-				Vector3 tempVector = transform.localScale;
-				tempVector.x = 0.5f;
-				transform.localScale = tempVector;
-
+				ChangeDirection(1);
 			}
 			if (direction < 0)
 			{
@@ -94,9 +91,7 @@ public class EnemyController : Figure {
 						forceX = -speed * 1.2f;
 				}
 				anim.SetBool("isRunning", true);
-				Vector3 tempVector = transform.localScale;
-				tempVector.x = -0.5f;
-				transform.localScale = tempVector;
+				ChangeDirection(-1);
 			}
 			//End of Left - Right
 			/*

@@ -2,32 +2,38 @@
 using System.Collections;
 
 public class PlayerSight : MonoBehaviour {
-	
+
+	public int hbsCounter;
+	public HealthBar displayedHealthBar;
 	EnemyController[] allEnemies;
-	private int hbCounter = 0;
 
 	// Use this for initialization
 	void Start () {
 		allEnemies = FindObjectsOfType<EnemyController>();
-		foreach (var enemy in allEnemies)
-		{
+        foreach (var enemy in allEnemies)
 			enemy.GetComponentInChildren<HealthBar>().ToggleOn(false);
-		}
+		hbsCounter = 0;
+	}
+	void Update()
+	{
+
 	}
 	
 	void OnTriggerEnter2D(Collider2D target)
 	{
 		if (target.tag == "Enemy")
-			if (target.enabled)
-			{
-				
-            }
+		{
+				target.GetComponentInChildren<HealthBar>().ToggleOn(true);
+				displayedHealthBar = target.GetComponentInChildren<HealthBar>();
+				hbsCounter++;
+		}
 	}
 	void OnTriggerExit2D(Collider2D target)
 	{
 		if (target.tag == "Enemy")
 		{
-			
+				target.GetComponentInChildren<HealthBar>().ToggleOn(false);
+				hbsCounter--;
 		}
 	}
 }

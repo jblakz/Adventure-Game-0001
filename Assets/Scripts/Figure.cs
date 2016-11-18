@@ -38,6 +38,12 @@ public abstract class Figure : MonoBehaviour {
 		if (respawnParticle != null)
 			Instantiate(respawnParticle, transform.position, transform.rotation);
 	}
+	public void ChangeDirection(int direction)
+	{
+		Vector3 tempVector = transform.localScale;
+		tempVector.x = direction*0.5f;
+		transform.localScale = tempVector;
+	}
 	void ToggleColliders(bool toggle)
 	{
 		colliders = GetComponents<Collider2D>();
