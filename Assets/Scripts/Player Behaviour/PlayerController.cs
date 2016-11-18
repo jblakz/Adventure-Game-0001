@@ -55,7 +55,7 @@ public class PlayerController : Figure
 		float direction = joystick.Horizontal();
 
 		anim.SetBool("grounded",
-			Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer));
+			Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius,groundLayer));
 
 		//Left - Right
 		if (direction > 0)
@@ -153,6 +153,16 @@ public class PlayerController : Figure
 		if (body.IsTouching(levelController.currentCheckpoint.GetComponent<Collider2D>()))
 			isDead = false;
 		anim.SetBool("isDead", isDead);
+	}
+	void OnCollisionEnter2D(Collision2D coll)
+	{
+		if (coll.gameObject.tag == "Enemy")
+			groundLayer = LayerMask.GetMask("Figure");
+	}
+	void OnCollisionExit2D(Collision2D coll)
+	{
+		if (coll.gameObject.tag == "Enemy")
+			groundLayer = LayerMask.GetMask("Ground");
 	}
 
 	//Coroutine

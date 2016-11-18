@@ -44,7 +44,7 @@ public class StrikeAttackController : MonoBehaviour {
 	}
 	public void OnTriggerEnter2D(Collider2D target)
 	{
-		if (target.GetComponent<Figure>() != attacker)
+		if (target.tag != attacker.tag)
 		{
 			direction = 2 * attacker.transform.localScale.x;
 			target.GetComponent<Rigidbody2D>().velocity = new Vector2(direction * knockbackForce.x, knockbackForce.y);

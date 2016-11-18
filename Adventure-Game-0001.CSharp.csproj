@@ -69,7 +69,6 @@
     <Compile Include="Assets\Scripts\Cameras Behaviour\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Cameras Behaviour\ScrollScript.cs" />
     <Compile Include="Assets\Scripts\Enemies Behaviours\EnemyController.cs" />
-    <Compile Include="Assets\Scripts\Enemies Behaviours\EnemyHBsFrame.cs" />
     <Compile Include="Assets\Scripts\Enviroment Controller\Checkpoint.cs" />
     <Compile Include="Assets\Scripts\Enviroment Controller\DestroyFinishedParticle.cs" />
     <Compile Include="Assets\Scripts\Enviroment Controller\HealthBar.cs" />

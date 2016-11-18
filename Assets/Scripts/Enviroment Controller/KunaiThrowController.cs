@@ -36,11 +36,13 @@ public class KunaiThrowController : MonoBehaviour {
 	}
 	void OnTriggerEnter2D(Collider2D target)
 	{
-		if (target.GetComponent<Figure>() != thrower)
+		if (target.tag != thrower.tag)
 		{
 			if (thrower.transform.localScale.x < 0)
 				direction = -direction;
 			target.GetComponent<Rigidbody2D>().velocity = new Vector2(direction * knockbackForceX, knockbackForceY);
+			if (target.tag == "Enemy")
+				SupriseEnemy(target);
             Instantiate(damageEffect, target.transform.position, target.transform.rotation);
 			
 			if (target.GetComponent<Figure>().health < kunaiDamage)
@@ -50,5 +52,12 @@ public class KunaiThrowController : MonoBehaviour {
 			gameObject.GetComponent<Renderer>().enabled = false;
 			gameObject.GetComponent<Collider2D>().enabled = false;
 		}
+	}
+	void SupriseEnemy(Collider2D target)
+	{
+		EnemyController receiver = target.GetComponent<EnemyController>();
+		//Check if thrower and receiver facing same direction
+		if (thrower.transform.localScale.x * receiver.transform.localScale.x > 0)
+			receiver.ChangeDirection(-direction);
 	}
 }

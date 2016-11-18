@@ -8,7 +8,6 @@ public abstract class Figure : MonoBehaviour {
 	public float attackDamage;
 	public float attackRange;
 	public float attackSpeed;   //Number of attack per 1 sec
-	public bool healthDisplayed = false;
 
 	public bool isAttacking;
 	public bool isThrowing;
@@ -19,8 +18,8 @@ public abstract class Figure : MonoBehaviour {
 	{
 		enabled = false;
 		GetComponent<Renderer>().enabled = false;
-		foreach (var renderers in GetComponentsInChildren<Renderer>())
-			renderers.enabled = false;
+		foreach (var renderer in GetComponentsInChildren<Renderer>())
+			renderer.enabled = false;
 		ToggleColliders(false);
 		GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 		GetComponent<Rigidbody2D>().gravityScale = 0f;
@@ -29,7 +28,6 @@ public abstract class Figure : MonoBehaviour {
 	{
 		health = maxHealth;
 		enabled = true;
-		healthDisplayed = false;
 		GetComponent<Animator>().SetBool("isDead", false);
 		transform.position = respawnPosition;
 		GetComponent<Renderer>().enabled = true;
@@ -39,6 +37,12 @@ public abstract class Figure : MonoBehaviour {
 		ToggleColliders(true);
 		if (respawnParticle != null)
 			Instantiate(respawnParticle, transform.position, transform.rotation);
+	}
+	public void ChangeDirection(int direction)
+	{
+		Vector3 tempVector = transform.localScale;
+		tempVector.x = direction*0.5f;
+		transform.localScale = tempVector;
 	}
 	void ToggleColliders(bool toggle)
 	{
