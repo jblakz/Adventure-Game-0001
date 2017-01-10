@@ -3,14 +3,10 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour {
-
+	
 	public void StartGame()
 	{
-		SceneManager.LoadScene("Level 1");
-	}
-	public void LoadGame()
-	{
-		//SceneManager.LoadScene("Level 1");
+		SceneManager.LoadScene("LevelMenu");
 	}
 	public void ToOption()
 	{

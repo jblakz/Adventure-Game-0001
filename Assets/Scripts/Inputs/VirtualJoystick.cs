@@ -40,7 +40,7 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
 			//Move Joystick
 			jsImg.rectTransform.anchoredPosition =
-				new Vector3(inputVector.x * (bgImg.rectTransform.sizeDelta.x / 3),
+				new Vector3(inputVector.x * (bgImg.rectTransform.sizeDelta.x / 7),
 				inputVector.z * (bgImg.rectTransform.sizeDelta.y / 3));
 		}
 

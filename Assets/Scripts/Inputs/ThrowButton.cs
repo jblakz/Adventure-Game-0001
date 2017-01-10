@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ThrowButton : Button {
+public class ThrowButton : UIButton {
 }

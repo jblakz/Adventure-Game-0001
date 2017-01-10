@@ -3,18 +3,30 @@ using System.Collections;
 
 public class KunaiThrowController : MonoBehaviour {
 
-	public float speed;
 	public Figure thrower;
-	public float knockbackForceX;
-	public float knockbackForceY;
 	public GameObject damageEffect;
+	public Vector2 knockbackForce;
+	public AudioClip impactSound;
+
 	public float kunaiDamage;
+	public float speed;
+	private float delay;
+	private float range;
 
 	private Rigidbody2D body;
-	private int direction = 1;
+	private float direction = 1f;
+	private float distance;
 
 	// Use this for initialization
 	void Start () {
+
+		kunaiDamage = thrower.throwDamage;
+		range = thrower.throwRange;
+		delay = 1f / thrower.throwSpeed;
+		speed = thrower.projectiveSpeed;
+		if (thrower.knockbackForce != new Vector2())
+			knockbackForce = thrower.knockbackForce;
+
 		body = GetComponent<Rigidbody2D>();
 		thrower.GetComponent<Animator>().SetBool("isThrowing", true);
 		thrower.isThrowing = true;
@@ -25,12 +37,21 @@ public class KunaiThrowController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (thrower != null)
+			if (direction < 0)
+				distance = thrower.transform.position.x - body.transform.position.x;
+			else distance = body.transform.position.x - thrower.transform.position.x;
+		if (distance > range)
+		{
+			gameObject.GetComponent<Collider2D>().enabled = false;
+			gameObject.GetComponent<Renderer>().enabled = false;
+		}
 		body.velocity = new Vector2(speed, body.velocity.y);
 		StartCoroutine("KunaiThrowCo");
     }
 	public IEnumerator KunaiThrowCo()
 	{
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(delay);
 		Destroy(gameObject);
 		thrower.isThrowing = false;
 	}
@@ -38,12 +59,9 @@ public class KunaiThrowController : MonoBehaviour {
 	{
 		if (target.tag != thrower.tag)
 		{
-			if (thrower.transform.localScale.x < 0)
-				direction = -direction;
-			target.GetComponent<Rigidbody2D>().velocity = new Vector2(direction * knockbackForceX, knockbackForceY);
-			if (target.tag == "Enemy")
-				SupriseEnemy(target);
-            Instantiate(damageEffect, target.transform.position, target.transform.rotation);
+			direction = 2 * thrower.transform.localScale.x;
+			target.GetComponent<Rigidbody2D>().velocity = new Vector2(direction * knockbackForce.x, knockbackForce.y);
+			Instantiate(damageEffect, target.transform.position, target.transform.rotation);
 			
 			if (target.GetComponent<Figure>().health < kunaiDamage)
 				target.GetComponent<Figure>().health = 0f;
@@ -51,6 +69,16 @@ public class KunaiThrowController : MonoBehaviour {
 
 			gameObject.GetComponent<Renderer>().enabled = false;
 			gameObject.GetComponent<Collider2D>().enabled = false;
+
+			if (target.tag == "Enemy") {
+				LevelController.focusedEnemy = target.GetComponent<EnemyController>();
+				SupriseEnemy(target);
+			}
+
+			//Play impact audio
+			if(target.GetComponent<AudioSource>().isPlaying)
+				target.GetComponent<AudioSource>().Stop();
+			target.GetComponent<AudioSource>().PlayOneShot(impactSound);
 		}
 	}
 	void SupriseEnemy(Collider2D target)
@@ -58,6 +86,6 @@ public class KunaiThrowController : MonoBehaviour {
 		EnemyController receiver = target.GetComponent<EnemyController>();
 		//Check if thrower and receiver facing same direction
 		if (thrower.transform.localScale.x * receiver.transform.localScale.x > 0)
-			receiver.ChangeDirection(-direction);
+			receiver.ChangeDirection(-(int)direction);
 	}
 }

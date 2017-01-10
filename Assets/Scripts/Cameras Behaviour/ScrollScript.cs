@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ScrollScript : MonoBehaviour {
 
-	public float scrollSpeed = 0f;
+	public float scrollSpeed;
 
 	// Update is called once per frame
 	void Update () {
