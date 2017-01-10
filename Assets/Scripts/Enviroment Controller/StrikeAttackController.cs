@@ -7,6 +7,7 @@ public class StrikeAttackController : MonoBehaviour {
 	public GameObject damageEffect;
 	public Vector2 knockbackForce;
 	public float projectiveSpeed;
+	public AudioClip impactSound;
 
 	private float attackDamage;
 	private float range;
@@ -21,6 +22,9 @@ public class StrikeAttackController : MonoBehaviour {
 		attackDamage = attacker.attackDamage;
 		range = attacker.attackRange;
 		delay = 1f / attacker.attackSpeed;
+		if (attacker.knockbackForce != new Vector2())
+			knockbackForce = attacker.knockbackForce;
+
 		body = GetComponent<Rigidbody2D>();
 		attacker.GetComponent<Animator>().SetBool("isAttacking", true);
 		attacker.isAttacking = true;
@@ -55,7 +59,25 @@ public class StrikeAttackController : MonoBehaviour {
 			else target.GetComponent<Figure>().health -= attackDamage;
 
 			gameObject.GetComponent<Collider2D>().enabled = false;
+
+			if (target.tag == "Enemy")
+			{
+				LevelController.focusedEnemy = target.GetComponent<EnemyController>();
+				SupriseEnemy(target);
+			}
+
+			//Play impact audio
+			if (target.GetComponent<AudioSource>().isPlaying)
+				target.GetComponent<AudioSource>().Stop();
+			target.GetComponent<AudioSource>().PlayOneShot(impactSound);
 		}
+	}
+	void SupriseEnemy(Collider2D target)
+	{
+		EnemyController receiver = target.GetComponent<EnemyController>();
+		//Check if thrower and receiver facing same direction
+		if (attacker.transform.localScale.x * receiver.transform.localScale.x > 0)
+			receiver.ChangeDirection(-(int)direction);
 	}
 	//Co-routine
 	public IEnumerator AttackDelayCo()

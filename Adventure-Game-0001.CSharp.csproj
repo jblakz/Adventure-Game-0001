@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.4.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -69,24 +71,37 @@
     <Compile Include="Assets\Scripts\Cameras Behaviour\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Cameras Behaviour\ScrollScript.cs" />
     <Compile Include="Assets\Scripts\Enemies Behaviours\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\Enemies Behaviours\FinalBossController.cs" />
+    <Compile Include="Assets\Scripts\Enemies Behaviours\GruntController.cs" />
+    <Compile Include="Assets\Scripts\Enemies Behaviours\LockPlayerController.cs" />
+    <Compile Include="Assets\Scripts\Enemies Behaviours\MiniBossController.cs" />
+    <Compile Include="Assets\Scripts\Enemies Behaviours\ThrowerController.cs" />
     <Compile Include="Assets\Scripts\Enviroment Controller\Checkpoint.cs" />
     <Compile Include="Assets\Scripts\Enviroment Controller\DestroyFinishedParticle.cs" />
+    <Compile Include="Assets\Scripts\Enviroment Controller\FireballController.cs" />
     <Compile Include="Assets\Scripts\Enviroment Controller\HealthBar.cs" />
-    <Compile Include="Assets\Scripts\Enviroment Controller\ItemPickedUp.cs" />
     <Compile Include="Assets\Scripts\Enviroment Controller\KunaiManager.cs" />
+    <Compile Include="Assets\Scripts\Enviroment Controller\KunaiPackController.cs" />
     <Compile Include="Assets\Scripts\Enviroment Controller\KunaiThrowController.cs" />
     <Compile Include="Assets\Scripts\Enviroment Controller\LevelController.cs" />
     <Compile Include="Assets\Scripts\Enviroment Controller\StrikeAttackController.cs" />
+    <Compile Include="Assets\Scripts\Enviroment Controller\SubtitleController.cs" />
+    <Compile Include="Assets\Scripts\Enviroment Controller\TerrainController.cs" />
+    <Compile Include="Assets\Scripts\Enviroment Controller\TipPaneController.cs" />
     <Compile Include="Assets\Scripts\Figure.cs" />
     <Compile Include="Assets\Scripts\Inputs\AttackButton.cs" />
-    <Compile Include="Assets\Scripts\Inputs\Button.cs" />
     <Compile Include="Assets\Scripts\Inputs\JumpButton.cs" />
     <Compile Include="Assets\Scripts\Inputs\ThrowButton.cs" />
+    <Compile Include="Assets\Scripts\Inputs\UIButton.cs" />
     <Compile Include="Assets\Scripts\Inputs\VirtualJoystick.cs" />
     <Compile Include="Assets\Scripts\Player Behaviour\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Player Behaviour\PlayerSight.cs" />
+    <Compile Include="Assets\Scripts\Scene Controllers\LevelExit.cs" />
+    <Compile Include="Assets\Scripts\Scene Controllers\LevelMenuController.cs" />
     <Compile Include="Assets\Scripts\Scene Controllers\MainMenuController.cs" />
     <Compile Include="Assets\Scripts\Scene Controllers\OptionMenuController.cs" />
+    <Compile Include="Assets\Scripts\Scene Controllers\PauseMenuController.cs" />
+    <Compile Include="Assets\Scripts\Skill Controllers\CallBackupController.cs" />
+    <Compile Include="Assets\Scripts\Skill Controllers\Skill.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Sprites\Terrain\BG\bgElements_spritesheet.xml" />

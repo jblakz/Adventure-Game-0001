@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AttackButton : Button {
+public class AttackButton : UIButton {
 }

@@ -4,14 +4,9 @@ using UnityEngine.UI;
 
 public class PlayerController : Figure
 {
-	public float speed;
-	public float jumpForce;
-	public float maxVelocity;
 
 	public Transform firingPoint;
 	public Transform groundCheck;
-	public float groundCheckRadius = 0.1f;
-	public LayerMask groundLayer;
 	public GameObject closeAttack;
 	public GameObject projective;
 	//Inputs
@@ -28,6 +23,7 @@ public class PlayerController : Figure
 
 	void Awake()
 	{
+		isAlive = true;
 		body = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
 		levelController = FindObjectOfType<LevelController>();
@@ -49,62 +45,19 @@ public class PlayerController : Figure
 
 	void MovementCheck()
 	{
-		float forceX = 0f;
-		float forceY = 0f;
 		float velocity = Mathf.Abs(body.velocity.x);
 		float direction = joystick.Horizontal();
+		
+		anim.SetBool("grounded", IsGrounded(groundCheck));
 
-		anim.SetBool("grounded",
-			Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius,groundLayer));
-
-		//Left - Right
-		if (direction > 0)
-		{
-			if (velocity < maxVelocity)
-			{
-				if (anim.GetBool("grounded"))
-					forceX = speed;
-				else
-					forceX = speed * 1.2f;
-			}
-			anim.SetBool("isRunning", true);
-			Vector3 tempVector = transform.localScale;
-			tempVector.x = 0.5f;
-			transform.localScale = tempVector;
-
-		}
-		else if (direction < 0)
-		{
-			if (velocity < maxVelocity)
-			{
-				if (anim.GetBool("grounded"))
-					forceX = -speed;
-				else
-					forceX = -speed * 1.2f;
-			}
-			anim.SetBool("isRunning", true);
-			Vector3 tempVector = transform.localScale;
-			tempVector.x = -0.5f;
-			transform.localScale = tempVector;
-		}
-		else
-		{
-			anim.SetBool("isRunning", false);
-		}
-		//End of Left - Right
-
-		//Jump
+		//Move method in parent class
+		Move(anim, body, direction, velocity);
+		//Jump method in parent class
 		if (jumpButton.Pressed() || Input.GetKey(KeyCode.Space))
 		{
-			if (anim.GetBool("grounded"))
-			{
-				anim.SetBool("grounded", false);
-				forceY = jumpForce;
-				body.velocity = new Vector2(body.velocity.x, forceY);
-			}
+			Jump(anim, body);
 		}
 		//End of Jump
-		body.AddForce(new Vector2(forceX, 0));
 	}
 	void AttackCheck()
 	{
@@ -113,13 +66,7 @@ public class PlayerController : Figure
 			&& !isAttacking
 			)
 		{
-			if (anim.GetBool("grounded"))
-				anim.Play("Attack");
-			else anim.Play("JumpAttack");
-			float direction = 2*body.transform.localScale.x;
-			closeAttack.GetComponent<StrikeAttackController>().attacker = this;
-			Vector3 position = new Vector3(firingPoint.position.x - direction, firingPoint.position.y);
-			Instantiate(closeAttack, position, firingPoint.rotation);
+			MeleeAttack(anim, body, closeAttack, firingPoint);
 		}
 		else
 		{
@@ -132,10 +79,7 @@ public class PlayerController : Figure
 		{
 			if ((throwButton.Pressed() || Input.GetKey(KeyCode.X)))
 			{
-				anim.Play("Throw");
-				projective.GetComponent<KunaiThrowController>().thrower = this;
-				Instantiate(projective, firingPoint.position, firingPoint.rotation);
-				KunaiManager.AddNumbers(-1);
+				ThrowKunai(anim, body, projective, firingPoint, -1);
 			}
 		}
 		else
@@ -153,16 +97,6 @@ public class PlayerController : Figure
 		if (body.IsTouching(levelController.currentCheckpoint.GetComponent<Collider2D>()))
 			isDead = false;
 		anim.SetBool("isDead", isDead);
-	}
-	void OnCollisionEnter2D(Collision2D coll)
-	{
-		if (coll.gameObject.tag == "Enemy")
-			groundLayer = LayerMask.GetMask("Figure");
-	}
-	void OnCollisionExit2D(Collision2D coll)
-	{
-		if (coll.gameObject.tag == "Enemy")
-			groundLayer = LayerMask.GetMask("Ground");
 	}
 
 	//Coroutine
